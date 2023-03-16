@@ -8,7 +8,7 @@ export default class TodoItem extends React.Component {
                 <span>
                     {this.props.title}
                 </span>
-                <input type="button" value={'x'}/>
+                <input type="button" value='x'/>
             </div>
         )
     }
