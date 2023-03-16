@@ -1,32 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 
-export default class TodoForm extends React.Component {
+export default function TodoForm(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {text: ""};
-    }
+    const [text, setText] = useState("");
 
-    handleSubmit = (event) => {
+    function handleSubmit(event) {
         event.preventDefault();
-        this.props.onSubmit(this.state.text);
-        this.setState({text: ''})
+        props.onSubmit(text);
+        setText('');
     }
 
-    handleChange = (event) => {
-        this.setState({text: event.target.value})
+    function handleChange(event) {
+        setText(event.target.value);
     }
 
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <input type="text"
-                       placeholder='Добавьте новое дело...'
-                       value={this.state.text}
-                       onChange={this.handleChange}
-                />
-                <input type="submit"/>
-            </form>
-        )
-    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="text"
+                   placeholder='Добавьте новое дело...'
+                   value={text}
+                   onChange={handleChange}
+            />
+            <input type="submit"/>
+        </form>
+    )
 }

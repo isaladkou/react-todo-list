@@ -1,23 +1,21 @@
 import React from "react";
 
-export default class TodoItem extends React.Component {
-    handleClick = () => {
-        this.props.onRemove(this.props.id);
+export default function TodoItem(props) {
+    function handleClick() {
+        props.onRemove(props.id);
     }
 
-    handleChange = () => {
-        this.props.onComplete(this.props.id);
+    function handleChange() {
+        props.onComplete(props.id);
     }
 
-    render() {
-        return (
-            <div>
-                <input type="checkbox" checked={this.props.completed} onChange={this.handleChange}/>
-                <span>
-                    {this.props.title}
+    return (
+        <div>
+            <input type="checkbox" checked={props.completed} onChange={handleChange}/>
+            <span>
+                    {props.title}
                 </span>
-                <input type="button" value='x' onClick={this.handleClick}/>
-            </div>
-        )
-    }
+            <input type="button" value='x' onClick={handleClick}/>
+        </div>
+    )
 }

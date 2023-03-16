@@ -1,41 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TodoItem from "./TodoItem";
 import TodoForm from "./TodoForm";
 
-export default class TodoList extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [],
-            nextId: 0
-        }
-    }
+export default function TodoList() {
+    const [items, setItems] = useState([]);
+    const [nextId, setNextId] = useState(0);
 
-    handleItemAdd = (itemTitle) => {
-        let id = this.state.nextId;
+    function handleItemAdd(itemTitle) {
         let item = {
-            id: id,
+            id: nextId,
             title: itemTitle,
             completed: false
         };
-        const items = [...this.state.items];
-        items.push(item);
-        this.setState({items, nextId: ++id});
+        setNextId(nextId + 1);
+        let newItems = [...items];
+        newItems.push(item);
+        setItems(newItems);
     }
 
-    handleItemRemove = (id) => {
-        let items = this.state.items.filter(item => item.id !== id);
-        this.setState({items});
+    function handleItemRemove(id) {
+        let newItems = items.filter(item => item.id !== id);
+        setItems(newItems);
     }
 
-    handleItemComplete = (id) => {
-        let items = [...this.state.items];
-        items.find(item => item.id === id).completed = true;
-        this.setState({items});
+    function handleItemComplete(id) {
+        let newItems = [...items];
+        let item = items.find(item => item.id === id);
+        item.completed = true;
+        setItems(newItems);
     }
 
-    getTasksByCompletion = (isCompleted) => {
-        return this.state.items
+    function getTasksByCompletion(isCompleted) {
+        return items
             .filter(item => item.completed === isCompleted)
             .map((item, i) => (
                 <TodoItem
@@ -43,22 +39,20 @@ export default class TodoList extends React.PureComponent {
                     completed={item.completed}
                     id={item.id}
                     key={i}
-                    onRemove={this.handleItemRemove}
-                    onComplete={this.handleItemComplete}
+                    onRemove={handleItemRemove}
+                    onComplete={handleItemComplete}
                 />
             ));
     }
 
-    render() {
-        return (
-            <>
-                <h1>Список дел</h1>
-                <h2>Надо сделать:</h2>
-                <TodoForm onSubmit={this.handleItemAdd}/>
-                {this.getTasksByCompletion(false)}
-                <h2>Уже выполнено:</h2>
-                {this.getTasksByCompletion(true)}
-            </>
-        )
-    }
+    return (
+        <>
+            <h1>Список дел</h1>
+            <h2>Надо сделать:</h2>
+            <TodoForm onSubmit={handleItemAdd}/>
+            {getTasksByCompletion(false)}
+            <h2>Уже выполнено:</h2>
+            {getTasksByCompletion(true)}
+        </>
+    )
 }
