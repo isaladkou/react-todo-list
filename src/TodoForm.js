@@ -5,10 +5,9 @@ export default class TodoForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {text: ""};
-        // this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit = (event)  => {
+    handleSubmit = (event) => {
         event.preventDefault();
         this.props.onSubmit(this.state.text);
         this.setState({text: ''})
