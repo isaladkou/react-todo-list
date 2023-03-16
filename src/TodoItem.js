@@ -11,11 +11,12 @@ export default function TodoItem(props) {
 
     return (
         <div>
-            <input type="checkbox" checked={props.completed} onChange={handleChange}/>
-            <span>
-                    {props.title}
-                </span>
-            <input type="button" value='x' onClick={handleClick}/>
+            <input type="checkbox"
+                   checked={props.completed}
+                   disabled={props.completed}
+                   onChange={handleChange}/>
+            <span>{props.title}</span>
+            {!props.completed && <input type="button" value='x' onClick={handleClick}/>}
         </div>
     )
 }

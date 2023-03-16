@@ -48,8 +48,8 @@ export default function TodoList() {
     return (
         <>
             <h1>Список дел</h1>
-            <h2>Надо сделать:</h2>
             <TodoForm onSubmit={handleItemAdd}/>
+            <h2>Надо сделать:</h2>
             {getTasksByCompletion(false)}
             <h2>Уже выполнено:</h2>
             {getTasksByCompletion(true)}
